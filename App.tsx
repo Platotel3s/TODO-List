@@ -34,9 +34,9 @@ export default function App() {
           }}
         >
           <Stack.Screen name='Welcome' component={Welcome} options={{headerShown:false}}/>
-          <Stack.Screen name='Home' component={Home} options={{headerShown:false}}/>
-          <Stack.Screen name='TambahTugas' component={TambahTugas} options={{headerShown:false}}/>
-          <Stack.Screen name='EditTugas' component={EditTugas} options={{headerShown:false}}/>
+          <Stack.Screen name='Home' component={Home} options={{headerShown:true}}/>
+          <Stack.Screen name='TambahTugas' component={TambahTugas} options={{headerShown:true}}/>
+          <Stack.Screen name='EditTugas' component={EditTugas} options={{headerShown:true}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
