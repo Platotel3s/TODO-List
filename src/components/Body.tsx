@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigasiRoot } from "../../App";
@@ -19,7 +19,11 @@ export default function Body({ children }: Template) {
   };
 
   return (
-    <View style={styling.container}>
+    <KeyboardAvoidingView 
+      style={styling.container} 
+      behavior={Platform.OS==='ios'?'padding':'height'}
+      keyboardVerticalOffset={Platform.OS==='ios'?64:0}
+    >
       <View style={styling.contentArea}>
         {children}
       </View>
@@ -63,7 +67,7 @@ export default function Body({ children }: Template) {
           </TouchableWithoutFeedback>
         </TouchableOpacity>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
