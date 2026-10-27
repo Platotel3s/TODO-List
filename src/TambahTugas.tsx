@@ -9,10 +9,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const STORAGE_KEY = "@task_list";
 
 export default function TambahTugas() {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [kapan, setKapan] = useState("");
-  const move = useNavigation<StackNavigationProp<NavigasiRoot>>();
+  const [title,setTitle]=useState("");
+  const [desc,setDesc] = useState("");
+  const [kapan,setKapan]=useState("");
+  const move=useNavigation<StackNavigationProp<NavigasiRoot>>();
 
   const simpan=async()=>{
     if (!title.trim()) {
@@ -23,21 +23,24 @@ export default function TambahTugas() {
       id: Date.now().toString(),
       title: title,
       desc: desc,
-      tanggal: kapan || new Date().toLocaleDateString("id-ID"),
-      status: "TODO",
+      tanggal: kapan||new Date().toLocaleDateString("id-ID"),
+      status:"TODO",
     };
 
     try {
-      const existedData = await AsyncStorage.getItem(STORAGE_KEY);
-      const tasks = existedData ? JSON.parse(existedData) : [];
+      const existedData=await AsyncStorage.getItem(STORAGE_KEY);
+      const tasks = existedData?JSON.parse(existedData) : [];
       tasks.push(newTask);
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      await AsyncStorage.setItem(STORAGE_KEY,JSON.stringify(tasks));
       
-      Alert.alert("Sukses", "Tugas berhasil ditambahkan!", [
-        { text: "OK", onPress: () => move.goBack() }
+      Alert.alert("Sukses","Tugas berhasil ditambahkan!",[
+        { 
+          text:"OK", 
+          onPress:()=>move.goBack() 
+        }
       ]);
     } catch (e) {
-      console.log("Gagal menyimpan tugas:", e);
+      console.log("Gagal menyimpan tugas:",e);
     }
   };
 
