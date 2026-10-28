@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from "@expo/vector-icons";
 import Body from "./components/Body";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { useTheme } from "./themes/ThemeProvider";
 
 interface Todo {
   id: string;
@@ -72,10 +73,10 @@ export default function Home({navigation}:Preps) {
       },
     ]);
   };
-
+  const {colors}=useTheme();
   return (
     <Body>
-      <Text style={styles.judulUtama}>Daftar Tugas Saya</Text> 
+      <Text style={[styles.judulUtama,{color:colors.text}]}>Daftar Tugas Saya</Text> 
       <FlatList
         data={todoList}
         keyExtractor={(item) => item.id}
@@ -126,7 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 24, 
     fontWeight: "bold", 
     marginBottom: 20, 
-    color: "#1E293B" 
   },
   card: {
     backgroundColor: "#fff",

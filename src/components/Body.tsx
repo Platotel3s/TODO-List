@@ -1,9 +1,10 @@
 import React, { ReactNode, useState } from "react";
 import { KeyboardAvoidingView, Modal, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigasiRoot } from "../../App";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../themes/ThemeProvider";
 
 interface Template {
   children: ReactNode;
@@ -11,16 +12,21 @@ interface Template {
 
 export default function Body({ children }: Template) {
   const [show,setShow]=useState(false);
-  const move = useNavigation<StackNavigationProp<NavigasiRoot>>();
+  const move=useNavigation<StackNavigationProp<NavigasiRoot>>();
 
   const navigateTo=(screen:keyof NavigasiRoot)=>{
     setShow(false);
     move.navigate(screen);
   };
+  
+  const {colors,isDark,setThemeMode}=useTheme();
+  const gantiTema=()=>{
+    setThemeMode(isDark?'light':'dark');
+  };
 
   return (
     <KeyboardAvoidingView 
-      style={styling.container} 
+      style={[styling.container,{backgroundColor:colors.background}]} 
       behavior={Platform.OS==='ios'?'padding':'height'}
       keyboardVerticalOffset={Platform.OS==='ios'?64:0}
     >
@@ -46,22 +52,34 @@ export default function Body({ children }: Template) {
           onPress={() => setShow(false)}
         >
           <TouchableWithoutFeedback>
-            <View style={styling.menuCard}>
+            <View style={[styling.menuCard,{backgroundColor:colors.card}]}>
               <TouchableOpacity 
                 onPress={()=>setShow(false)} 
                 style={styling.closeIcon}
               >
                 <FontAwesome name="times-circle" size={24} color="#ff4444" />
               </TouchableOpacity>
-              <Text style={styling.menuTitle}>Menu Navigasi</Text>
-              <TouchableOpacity onPress={()=>navigateTo('Home')} style={styling.menuItem}>
-                <FontAwesome name="home" size={20} color="#333" />
-                <Text style={styling.menuText}>Halaman Utama</Text>
+              <Text style={[styling.menuTitle,{color:colors.text}]}>Menu Navigasi</Text>
+              <TouchableOpacity 
+                onPress={()=>navigateTo('Home')} 
+                style={styling.menuItem}
+              >
+                <FontAwesome name="home" size={20} color={colors.text} />
+                <Text style={[styling.menuText,{color:colors.text}]}>Halaman Utama</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity onPress={()=>navigateTo('TambahTugas')} style={styling.menuItem}>
-                <FontAwesome name="plus-circle" size={20} color="#333" />
-                <Text style={styling.menuText}>Tambah Tugas</Text>
+              <TouchableOpacity 
+                onPress={()=>navigateTo('TambahTugas')} 
+                style={styling.menuItem}
+              >
+                <FontAwesome name="plus-circle" size={20} color={colors.text} />
+                <Text style={[styling.menuText,{color:colors.text}]}>Tambah Tugas</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styling.menuItem}
+                onPress={gantiTema}
+              >
+                <MaterialIcons name="dark-mode" size={20} color={colors.text}/>
+                <Text style={[styling.menuText,{color:colors.text}]}>Ganti Tema</Text>
               </TouchableOpacity>
             </View>
           </TouchableWithoutFeedback>
@@ -74,7 +92,6 @@ export default function Body({ children }: Template) {
 const styling = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   contentArea: {
     flex: 1,

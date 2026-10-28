@@ -4,27 +4,29 @@ import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigasiRoot } from "../App";
+import { useTheme } from "./themes/ThemeProvider";
 
 export default function Welcome(){
   const navigation=useNavigation<StackNavigationProp<NavigasiRoot>>();
   const handleStart=()=>{
     navigation.navigate('Home');
   }
+  const {colors}=useTheme();
   return(
-    <View style={styling.canvas}>
-      <View style={styling.card}>
-        <Text style={styling.cardTitle}>Welcome To TodoApp</Text>
+    <View style={[styling.canvas,{backgroundColor:colors.background}]}>
+      <View style={[styling.card,{backgroundColor:colors.background}]}>
+        <Text style={[styling.cardTitle,{color:colors.text}]}>Welcome To TodoApp</Text>
         <View style={styling.section}>
           <BlurView intensity={4} tint="light" style={styling.sectionOne}>
-            <FontAwesome name="book" size={94} color="#fffcdc"/>
+            <FontAwesome name="book" size={94} color={colors.text}/>
           </BlurView>
           <TouchableOpacity
-            style={styling.button}
+            style={[styling.button,{backgroundColor:colors.background}]}
             onPress={handleStart}
             activeOpacity={0.8}
           >
-            <Text style={styling.buttonText}>Mulai</Text>
-            <FontAwesome name="arrow-right" size={18} color="#fff"/>
+            <Text style={[styling.buttonText,{color:colors.text}]}>Mulai</Text>
+            <FontAwesome name="arrow-right" size={18} color={colors.text}/>
           </TouchableOpacity>
         </View>
       </View>
@@ -37,7 +39,6 @@ const styling=StyleSheet.create({
     flex:1,
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor:'#e0e7ff'
   },
   card:{
     height:'auto',
@@ -45,7 +46,6 @@ const styling=StyleSheet.create({
     padding:20,
     margin:8,
     borderRadius:25,
-    backgroundColor:'#192f6a',
     elevation:15,
     shadowColor:'#000',
     shadowOffset:{width:0,height:5},
@@ -54,7 +54,6 @@ const styling=StyleSheet.create({
     marginBottom:10
   },
   cardTitle:{
-    color:'#fff',
     textAlign:'center',
     fontWeight:'bold',
     fontSize:26,
@@ -66,14 +65,7 @@ const styling=StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
-  subtitle:{
-    color:'#fff',
-    textAlign:'center',
-    fontSize:14,
-    marginTop:20,
-    marginBottom:20,
-    paddingHorizontal:10
-  },
+ 
   sectionOne:{
     padding:25,
     justifyContent:'center',
@@ -94,7 +86,6 @@ const styling=StyleSheet.create({
     marginBottom:15
   },
   buttonText:{
-    color:'#fff',
     fontWeight:'bold',
     fontSize:16
   },

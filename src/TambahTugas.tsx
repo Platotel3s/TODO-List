@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigasiRoot } from "../App";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from "./themes/ThemeProvider";
 const STORAGE_KEY = "@task_list";
 
 export default function TambahTugas() {
@@ -13,7 +14,7 @@ export default function TambahTugas() {
   const [desc,setDesc] = useState("");
   const [kapan,setKapan]=useState("");
   const move=useNavigation<StackNavigationProp<NavigasiRoot>>();
-
+  const {colors}=useTheme();
   const simpan=async()=>{
     if (!title.trim()) {
       Alert.alert("Error","Masukkan judul tugas terlebih dahulu");
@@ -46,10 +47,10 @@ export default function TambahTugas() {
 
   return (
     <Body>
-      <Text style={styles.judul}>
+      <Text style={[styles.judul,{color:colors.text}]}>
         <FontAwesome name="book" size={24} /> Tambah Tugas
       </Text>
-      <Text style={styles.label}>Judul Tugas</Text>
+      <Text style={[styles.label,{color:colors.text}]}>Judul Tugas</Text>
       <TextInput 
         style={styles.input} 
         value={title} 
@@ -100,7 +101,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#1E293B"
   },
   simpan: {
     marginTop: 20,

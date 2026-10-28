@@ -37,13 +37,15 @@ function AppNavigator(){
         initialRouteName='Welcome'
         screenOptions={{
           headerStyle:{
-            backgroundColor:'#192f6a'
+            backgroundColor:colors.card
           },
-          headerTintColor:'#fff',
+          headerTintColor:colors.text,
           headerTitleStyle:{
             fontWeight:'bold',
           },
-          cardStyle:{backgroundColor:'#e0e7ff'},
+          cardStyle:{
+            backgroundColor:colors.background
+          },
           headerShown:false
         }}
       >
@@ -56,22 +58,22 @@ function AppNavigator(){
         />
         <Stack.Screen 
           name='Home' 
-          component={Home} 
+          component={Home}
           options={{
-            headerShown:false
+            headerShown:true,
           }}
         />
         <Stack.Screen 
           name='TambahTugas' 
           component={TambahTugas} 
           options={{
-            headerShown:false
+            headerShown:true
           }}
         />
         <Stack.Screen 
           name='EditTugas' 
           component={EditTugas} 
-          options={{headerShown:false}}
+          options={{headerShown:true}}
         />
       </Stack.Navigator>
     </NavigationContainer>
